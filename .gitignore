@@ -1,0 +1,4 @@
+order-service/node_modules
+user-service/node_modules
+user-service/logs
+user-service/pact/logs
