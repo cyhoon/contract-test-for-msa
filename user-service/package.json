@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node src/server.ts",
-    "test": "jest --testMatch \"**/*.spec.ts\" --watchAll"
+    "pact:publish": "node publish.pact.js",
+    "test": "jest --watchAll"
   },
   "dependencies": {
     "axios": "^0.24.0",

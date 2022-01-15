@@ -1,11 +1,10 @@
-import path from 'path';
 import { pactWith } from 'jest-pact';
-import { OrderServiceApi } from './orderServiceApi';
+import { OrderServiceApi } from '../orderServiceApi';
 import { Pact, Matchers } from '@pact-foundation/pact';
 
 const { eachLike, like } = Matchers;
 
-pactWith({ consumer: 'UserService', provider: 'OrderService' }, async (provider: Pact) => {
+pactWith({ consumer: 'UserService', provider: 'OrderService', pactfileWriteMode: 'merge' }, async (provider: Pact) => {
   let client: OrderServiceApi;
 
   beforeEach(() => {
@@ -37,14 +36,14 @@ pactWith({ consumer: 'UserService', provider: 'OrderService' }, async (provider:
         willRespondWith: {
           status: 200,
           headers: {
-            'Content-Type': 'application/json;',
+            'Content-Type': 'application/json; charset=utf-8',
           },
           body: {
             message: 'ok',
             data: {
               userId: like('hoon'),
               orders: eachLike({
-                id: 1,
+                id: '1',
                 title: 'product#1',
                 price: 3000,
               }),
@@ -59,7 +58,7 @@ pactWith({ consumer: 'UserService', provider: 'OrderService' }, async (provider:
 
       console.log('response: ', response);
 
-      expect(response.data.orders[0].id).toBe(1);
+      expect(response.data.orders[0].id).toBe('1');
       expect(response.data.orders[0].title).toBe('product#1');
       expect(response.data.orders[0].price).toBe(3000);
     });
